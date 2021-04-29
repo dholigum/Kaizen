@@ -15,12 +15,36 @@ struct Home: View {
                     RoundedRectangle(cornerRadius: 16)
                         .foregroundColor(Color("maincolor"))
                         .frame(height: 200)
-                    Text("Your Level")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding()
+                    HStack {
+                        Text("🏆")
+                            .font(.system(size: 100))
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding()
+                            .padding(.leading, 16)
+                            .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
+                        VStack(alignment: .leading, spacing: nil, content: {
+                            Text("Level 2")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                            Text("350 / 500 XP")
+                                .font(.subheadline)
+                                .fontWeight(.light)
+                                .foregroundColor(.white)
+                            HStack {
+                                Text("💡 ")
+                                    .font(.footnote)
+                                    .fontWeight(.light)
+                                    .foregroundColor(.white)
+                                Text("Finish more tasks to gain more 600 experience points")
+                                    .font(.footnote)
+                                    .fontWeight(.light)
+                                    .foregroundColor(.white)
+                            }
+                        })
                         .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
+                    }
                 })
                 
                 HStack {
@@ -31,7 +55,7 @@ struct Home: View {
                     Spacer(minLength: 0)
                 }
                 .padding()
-                .background(Color.white)
+                .background(Color("accentcolor"))
                 
                 ScrollView(.vertical, showsIndicators: false, content: {
                     LazyVStack(alignment: .leading, spacing: 20) {
@@ -39,6 +63,7 @@ struct Home: View {
                     }
                     .padding()
                 })
+                .background(Color("accentcolor"))
             }
             // Add button
             Button(action: {}, label: {
