@@ -16,4 +16,8 @@ class HomeViewModel: ObservableObject {
     
     // For NewData sheet
     @Published var isNewData = false
+    
+//    func selectDifficulty() -> String {
+//       
+//    }
 }

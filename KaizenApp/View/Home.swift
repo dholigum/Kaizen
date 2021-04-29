@@ -17,7 +17,7 @@ struct Home: View {
             VStack {
                 ZStack(alignment: Alignment(horizontal: .leading, vertical: .top), content: {
                     RoundedRectangle(cornerRadius: 16)
-                        .foregroundColor(Color("maincolor"))
+                        .gradientForeground(colors: [Color("maincolor"), Color("maincolor2")])
                         .frame(height: 200)
                     HStack {
                         Text("🏆")
@@ -115,5 +115,14 @@ struct Home: View {
         .sheet(isPresented: $homeData.isNewData, content: {
             ModalView(homeData: homeData)
         })
+    }
+}
+
+extension View {
+    public func gradientForeground(colors: [Color]) -> some View {
+        self.overlay(LinearGradient(gradient: .init(colors: colors),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing))
+            .mask(self)
     }
 }
