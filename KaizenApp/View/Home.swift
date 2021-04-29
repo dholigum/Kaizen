@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct Home: View {
+    @StateObject var homeData = HomeViewModel()
+    
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom), content: {
+            Color("accentcolor").edgesIgnoringSafeArea(.all)
+            
             VStack {
                 ZStack(alignment: Alignment(horizontal: .leading, vertical: .top), content: {
                     RoundedRectangle(cornerRadius: 16)
@@ -48,25 +52,53 @@ struct Home: View {
                 })
                 
                 HStack {
-                    Text("Tasks")
+                    Text("Your Tasks")
                         .font(.largeTitle)
-                        .fontWeight(.heavy)
+                        .fontWeight(.bold)
                         .foregroundColor(.black)
                     Spacer(minLength: 0)
                 }
                 .padding()
+                .padding(.bottom, -16)
                 .background(Color("accentcolor"))
                 
                 ScrollView(.vertical, showsIndicators: false, content: {
-                    LazyVStack(alignment: .leading, spacing: 20) {
-                        
+                    LazyVStack(alignment: .leading, spacing: 10) {
+                        HStack {
+                            RoundedRectangle(cornerRadius: 2.5)
+                                .foregroundColor(Color("greencolor"))
+                                .frame(width: 5, height: 42, alignment: .leading)
+                                .padding(.leading, 8)
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Text("Learn Swift Programming")
+                                        .font(.title3)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.black)
+                                    Spacer()
+                                    Text("100 XP")
+                                        .font(.subheadline)
+                                        .fontWeight(.light)
+                                        .padding(.trailing, 12)
+                                        .foregroundColor(.black)
+                                }
+                                
+                                Text("7PM - Mei 2, 2021")
+                                    .font(.footnote)
+                                    .fontWeight(.light)
+                                    .foregroundColor(.black)
+                            }
+                        }
+                        .frame(width: 360, height: 60, alignment: .leading)
+                        .background(Color.white)
+                        .cornerRadius(8)
                     }
                     .padding()
                 })
                 .background(Color("accentcolor"))
             }
             // Add button
-            Button(action: {}, label: {
+            Button(action: {homeData.isNewData.toggle()}, label: {
                 Image(systemName: "plus")
                     .font(.largeTitle)
                     .foregroundColor(.white)
@@ -80,5 +112,8 @@ struct Home: View {
         })
         .ignoresSafeArea(.all, edges: .top)
         .background(Color.black.opacity(0.06).ignoresSafeArea(.all, edges: .all))
+        .sheet(isPresented: $homeData.isNewData, content: {
+            ModalView(homeData: homeData)
+        })
     }
 }

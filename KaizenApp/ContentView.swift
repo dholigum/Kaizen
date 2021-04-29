@@ -11,7 +11,7 @@ import CoreData
 struct ContentView: View {
     
     init() {
-        UITextView.appearance().backgroundColor = .clear
+        UITextView.appearance().backgroundColor = UIColor(named: "accentcolor")
     }
 
     var body: some View {

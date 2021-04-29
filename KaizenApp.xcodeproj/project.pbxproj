@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F453FC5263A6864002FF42C /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F453FC4263A6864002FF42C /* ModalView.swift */; };
+		2F453FC8263A6968002FF42C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F453FC7263A6968002FF42C /* HomeViewModel.swift */; };
 		2FE0CF41263A414C0098447E /* KaizenAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE0CF40263A414C0098447E /* KaizenAppApp.swift */; };
 		2FE0CF43263A414C0098447E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE0CF42263A414C0098447E /* ContentView.swift */; };
 		2FE0CF45263A414D0098447E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FE0CF44263A414D0098447E /* Assets.xcassets */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F453FC4263A6864002FF42C /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
+		2F453FC7263A6968002FF42C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		2FE0CF3D263A414C0098447E /* KaizenApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KaizenApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FE0CF40263A414C0098447E /* KaizenAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaizenAppApp.swift; sourceTree = "<group>"; };
 		2FE0CF42263A414C0098447E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -86,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				2FE0CF5E263A55DC0098447E /* Home.swift */,
+				2F453FC4263A6864002FF42C /* ModalView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -93,6 +98,7 @@
 		2FE0CF5D263A55C40098447E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				2F453FC7263A6968002FF42C /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -167,7 +173,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F453FC5263A6864002FF42C /* ModalView.swift in Sources */,
 				2FE0CF4A263A414D0098447E /* Persistence.swift in Sources */,
+				2F453FC8263A6968002FF42C /* HomeViewModel.swift in Sources */,
 				2FE0CF4D263A414D0098447E /* KaizenApp.xcdatamodeld in Sources */,
 				2FE0CF5F263A55DC0098447E /* Home.swift in Sources */,
 				2FE0CF43263A414C0098447E /* ContentView.swift in Sources */,
