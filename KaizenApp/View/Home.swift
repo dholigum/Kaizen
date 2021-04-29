@@ -27,23 +27,43 @@ struct Home: View {
                         .gradientForeground(colors: [Color("maincolor"), Color("maincolor2")])
                         .frame(height: 200)
                     HStack {
-                        Text("🏆")
-                            .font(.system(size: 100))
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(.vertical)
-                            .padding(.leading, 24)
-                            .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
+                        
+                        ZStack {
+                            Circle()
+                                .trim(from: 0, to: 1)
+                                .stroke(Color("accentcolor"), lineWidth: 10)
+                                .frame(width: 80, height: 80)
+                                .padding(.leading, 28)
+                                .padding(.top, UIApplication.shared.windows.first!.safeAreaInsets.top + CGFloat(8))
+                            
+                            Circle()
+                                .trim(from: 0, to: 0.75)
+                                .stroke(style: StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round))
+                                .foregroundColor(Color.black)
+                                .frame(width: 80, height: 80)
+                                .padding(.leading, 28)
+                                .padding(.top, UIApplication.shared.windows.first!.safeAreaInsets.top + CGFloat(8))
+                        }
                         
                         VStack(alignment: .leading, spacing: nil, content: {
-                            Text("Level 2")
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
+                            HStack {
+                                Text("Level 2")
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                                Spacer()
+                                Button(action: {}, label: {
+                                    Image(systemName: "star.circle")
+                                        .foregroundColor(.white)
+                                        .font(Font.system(size: 30, weight: .regular))
+                                        .padding(.trailing)
+                                })
+                            }
                             Text("350 / 500 XP")
                                 .font(.subheadline)
                                 .fontWeight(.light)
                                 .foregroundColor(.white)
+                                .padding(.vertical, 1)
                             HStack {
                                 Text("💡 ")
                                     .font(.footnote)
@@ -56,6 +76,7 @@ struct Home: View {
                                     .foregroundColor(.white)
                             }
                         })
+                        .padding()
                         .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
                     }
                 })
@@ -125,9 +146,9 @@ struct Home: View {
                                         Label(
                                             title: { Text("Edit") },
                                             icon: { Image(systemName: "square.and.pencil") }
-                                            )
+                                        )
                                     })
-                                        
+                                    
                                     Button(action: {
                                         context.delete(task)
                                         try! context.save()
@@ -135,7 +156,7 @@ struct Home: View {
                                         Label(
                                             title: { Text("Delete") },
                                             icon: { Image(systemName: "multiply") }
-                                            )
+                                        )
                                     })
                                     
                                     Button(action: {
@@ -145,7 +166,7 @@ struct Home: View {
                                         Label(
                                             title: { Text("Mark as Done") },
                                             icon: { Image(systemName: "checkmark") }
-                                            )
+                                        )
                                     })
                                 }))
                             }
@@ -154,14 +175,14 @@ struct Home: View {
                     })
                     .background(Color("accentcolor"))
                 }
-                }
+            }
             
             // Add button
             Button(action: {homeData.isNewData.toggle()}, label: {
                 Image(systemName: "plus")
-                    .font(.largeTitle)
+                    .font(Font.system(size: 40, weight: .regular))
                     .foregroundColor(.white)
-                    .padding(20)
+                    .padding(12)
                     .background(
                         LinearGradient(gradient: .init(colors: [Color("maincolor"), Color("maincolor2")]), startPoint: .top, endPoint: .bottom)
                     )
