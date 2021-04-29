@@ -16,7 +16,7 @@ struct ModalView: View {
             Color("accentcolor").edgesIgnoringSafeArea(.all)
             
             VStack(alignment: .leading) {
-                Text("Add New Task")
+                Text("\(homeData.updateItem == nil ? "Add New" : "Update") Task")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
@@ -82,7 +82,7 @@ struct ModalView: View {
                 
                 // Add or Update task button
                 Button(action: {homeData.writeData(context: context)}, label: {
-                    Text("Add New")
+                    Text(homeData.updateItem == nil ? "Add Now" : "Update")
                         .font(.title2)
                         .foregroundColor(.white)
                         .fontWeight(.bold)

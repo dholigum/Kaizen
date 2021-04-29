@@ -16,6 +16,9 @@ class HomeViewModel: ObservableObject {
     // For NewData sheet
     @Published var isNewData = false
     
+    // Storing Update Item ...
+    @Published var updateItem: Task!
+    
     func selectDifficulty(value: String) {
         difficulty = value
     }
@@ -52,6 +55,24 @@ class HomeViewModel: ObservableObject {
     
     func writeData(context: NSManagedObjectContext) {
         
+        if updateItem != nil {
+            // Update old data ...
+            updateItem.date = date
+            updateItem.title = title
+            updateItem.difficulty = difficulty
+            
+            try! context.save()
+            
+            // Removing updatingItem if successfull
+            updateItem = nil
+            isNewData.toggle()
+            title = ""
+            difficulty = ""
+            date = Date()
+            
+            return
+        }
+        
         let newTask = Task(context: context)
         newTask.date = date
         newTask.title = title
@@ -70,6 +91,16 @@ class HomeViewModel: ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
+    }
+    
+    func editItem(item: Task) {
+        updateItem = item
+        
+        // Togging the newDataView ...
+        date = item.date!
+        title = item.title!
+        difficulty = item.difficulty!
+        isNewData.toggle()
     }
     
 }

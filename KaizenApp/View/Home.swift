@@ -14,6 +14,9 @@ struct Home: View {
     // Fetching Data ...
     @FetchRequest(entity: Task.entity(), sortDescriptors: [NSSortDescriptor(key: "date", ascending: true)], animation: .spring()) var results : FetchedResults<Task>
     
+    // For Deleting Data ...
+    @Environment(\.managedObjectContext) var context
+    
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom), content: {
             Color("accentcolor").edgesIgnoringSafeArea(.all)
@@ -99,6 +102,34 @@ struct Home: View {
                             .frame(width: 360, height: 60, alignment: .leading)
                             .background(Color.white)
                             .cornerRadius(8)
+                            .contextMenu(ContextMenu(menuItems: {
+                                Button(action: {homeData.editItem(item: task)}, label: {
+                                    Label(
+                                        title: { Text("Edit") },
+                                        icon: { Image(systemName: "square.and.pencil") }
+                                        )
+                                })
+                                    
+                                Button(action: {
+                                    context.delete(task)
+                                    try! context.save()
+                                }, label: {
+                                    Label(
+                                        title: { Text("Delete") },
+                                        icon: { Image(systemName: "multiply") }
+                                        )
+                                })
+                                
+                                Button(action: {
+                                    context.delete(task)
+                                    try! context.save()
+                                }, label: {
+                                    Label(
+                                        title: { Text("Mark as Done") },
+                                        icon: { Image(systemName: "checkmark") }
+                                        )
+                                })
+                            }))
                         }
                     }
                     .padding()
