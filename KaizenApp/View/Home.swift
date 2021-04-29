@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct Home: View {
     @StateObject var homeData = HomeViewModel()
+    
+    // Fetching Data ...
+    @FetchRequest(entity: Task.entity(), sortDescriptors: [NSSortDescriptor(key: "date", ascending: true)], animation: .spring()) var results : FetchedResults<Task>
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom), content: {
@@ -24,9 +28,10 @@ struct Home: View {
                             .font(.system(size: 100))
                             .fontWeight(.bold)
                             .foregroundColor(.white)
-                            .padding()
-                            .padding(.leading, 16)
+                            .padding(.vertical)
+                            .padding(.leading, 24)
                             .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
+                        
                         VStack(alignment: .leading, spacing: nil, content: {
                             Text("Level 2")
                                 .font(.largeTitle)
@@ -41,6 +46,7 @@ struct Home: View {
                                     .font(.footnote)
                                     .fontWeight(.light)
                                     .foregroundColor(.white)
+                                    .padding(.trailing, -8)
                                 Text("Finish more tasks to gain more 600 experience points")
                                     .font(.footnote)
                                     .fontWeight(.light)
@@ -64,34 +70,36 @@ struct Home: View {
                 
                 ScrollView(.vertical, showsIndicators: false, content: {
                     LazyVStack(alignment: .leading, spacing: 10) {
-                        HStack {
-                            RoundedRectangle(cornerRadius: 2.5)
-                                .foregroundColor(Color("greencolor"))
-                                .frame(width: 5, height: 42, alignment: .leading)
-                                .padding(.leading, 8)
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    Text("Learn Swift Programming")
-                                        .font(.title3)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.black)
-                                    Spacer()
-                                    Text("100 XP")
-                                        .font(.subheadline)
+                        ForEach(results) { task in
+                            HStack {
+                                RoundedRectangle(cornerRadius: 2.5)
+                                    .foregroundColor(Color("\(homeData.getStickyColor(difficulty: task.difficulty ?? "maincolor"))"))
+                                    .frame(width: 5, height: 42, alignment: .leading)
+                                    .padding(.leading, 8)
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        Text("\(task.title ?? "")")
+                                            .font(.subheadline)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.black)
+                                        Spacer()
+                                        Text("\(homeData.getExperiencePoint(difficulty: task.difficulty ?? "0")) XP")
+                                            .font(.subheadline)
+                                            .fontWeight(.light)
+                                            .padding(.trailing, 12)
+                                            .foregroundColor(.black)
+                                    }
+                                    
+                                    Text("\(task.date?.getFormattedDateString(format: "EEEE, MMM d, yyyy") ?? Date().getFormattedDateString(format: "EEEE, MMM d, yyyy"))")
+                                        .font(.footnote)
                                         .fontWeight(.light)
-                                        .padding(.trailing, 12)
                                         .foregroundColor(.black)
                                 }
-                                
-                                Text("7PM - Mei 2, 2021")
-                                    .font(.footnote)
-                                    .fontWeight(.light)
-                                    .foregroundColor(.black)
                             }
+                            .frame(width: 360, height: 60, alignment: .leading)
+                            .background(Color.white)
+                            .cornerRadius(8)
                         }
-                        .frame(width: 360, height: 60, alignment: .leading)
-                        .background(Color.white)
-                        .cornerRadius(8)
                     }
                     .padding()
                 })
@@ -104,7 +112,7 @@ struct Home: View {
                     .foregroundColor(.white)
                     .padding(20)
                     .background(
-                        AngularGradient(gradient: .init(colors: [Color("maincolor2"), Color("maincolor2")]), center: .center)
+                        LinearGradient(gradient: .init(colors: [Color("maincolor"), Color("maincolor2")]), startPoint: .top, endPoint: .bottom)
                     )
                     .clipShape(Circle())
             })
@@ -124,5 +132,14 @@ extension View {
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing))
             .mask(self)
+    }
+}
+
+extension Date {
+    func getFormattedDateString(format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        dateFormatter.timeZone = TimeZone.current
+        return dateFormatter.string(from: self)
     }
 }

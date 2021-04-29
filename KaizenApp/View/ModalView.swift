@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ModalView: View {
     @ObservedObject var homeData = HomeViewModel()
-    @State var backgroundColor = Color("accentcolor")
+    @Environment(\.managedObjectContext) var context
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
@@ -65,10 +65,10 @@ struct ModalView: View {
                         .padding(.bottom, 4)
 
                     HStack(spacing: 10) {
-                        DifficultyButton()
-                        DifficultyButton()
-                        DifficultyButton()
-                        DifficultyButton()
+                        DifficultyButton(homeData: homeData, emoji: "🤓", title: "Easy")
+                        DifficultyButton(homeData: homeData, emoji: "🙂", title: "Medium")
+                        DifficultyButton(homeData: homeData, emoji: "😠", title: "Hard")
+                        DifficultyButton(homeData: homeData, emoji: "😤", title: "Insane")
                     }
                     .padding(.leading, 8)
                 }
@@ -81,7 +81,7 @@ struct ModalView: View {
                 Spacer()
                 
                 // Add or Update task button
-                Button(action: {}, label: {
+                Button(action: {homeData.writeData(context: context)}, label: {
                     Text("Add New")
                         .font(.title2)
                         .foregroundColor(.white)
@@ -93,6 +93,8 @@ struct ModalView: View {
                 )
                 .cornerRadius(8)
                 .padding(.horizontal)
+                .disabled(homeData.title == "" && homeData.difficulty == "" ? true : false)
+                .opacity(homeData.title == "" ? 0.5 : 1)
             }
             .padding()
             

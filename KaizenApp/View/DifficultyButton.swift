@@ -8,18 +8,25 @@
 import SwiftUI
 
 struct DifficultyButton: View {
+    @ObservedObject var homeData: HomeViewModel
+    
+    var emoji: String
+    var title: String
+    
     var body: some View {
-        Button(action: {}, label: {
+        Button(action: {homeData.selectDifficulty(value: title)}, label: {
             VStack {
-                Text("🤓")
+                Text(emoji)
                     .font(.system(size: 32))
-                Text("Easy")
+                Text(title)
                     .font(.footnote)
-                    .foregroundColor(.white)
+                    .foregroundColor(homeData.difficulty == title ? .white : .gray)
             }
             .frame(width: 70, height: 70, alignment: .center)
             .background(
+                homeData.difficulty == title ?
                 LinearGradient(gradient: .init(colors: [Color("maincolor"), Color("maincolor2")]), startPoint: .top, endPoint: .bottom)
+                : LinearGradient(gradient: .init(colors: [Color("accentcolor")]), startPoint: .top, endPoint: .bottom)
             )
             .cornerRadius(8)
         })
