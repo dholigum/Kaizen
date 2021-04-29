@@ -13,6 +13,7 @@
 		2FE0CF48263A414D0098447E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FE0CF47263A414D0098447E /* Preview Assets.xcassets */; };
 		2FE0CF4A263A414D0098447E /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE0CF49263A414D0098447E /* Persistence.swift */; };
 		2FE0CF4D263A414D0098447E /* KaizenApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2FE0CF4B263A414D0098447E /* KaizenApp.xcdatamodeld */; };
+		2FE0CF59263A53730098447E /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FE0CF58263A53730098447E /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		2FE0CF49263A414D0098447E /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		2FE0CF4C263A414D0098447E /* KaizenApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = KaizenApp.xcdatamodel; sourceTree = "<group>"; };
 		2FE0CF4E263A414D0098447E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2FE0CF58263A53730098447E /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				2FE0CF4E263A414D0098447E /* Info.plist */,
 				2FE0CF4B263A414D0098447E /* KaizenApp.xcdatamodeld */,
 				2FE0CF46263A414D0098447E /* Preview Content */,
+				2FE0CF58263A53730098447E /* Launch Screen.storyboard */,
 			);
 			path = KaizenApp;
 			sourceTree = "<group>";
@@ -132,6 +135,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FE0CF59263A53730098447E /* Launch Screen.storyboard in Resources */,
 				2FE0CF48263A414D0098447E /* Preview Assets.xcassets in Resources */,
 				2FE0CF45263A414D0098447E /* Assets.xcassets in Resources */,
 			);
