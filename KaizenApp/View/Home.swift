@@ -71,71 +71,91 @@ struct Home: View {
                 .padding(.bottom, -16)
                 .background(Color("accentcolor"))
                 
-                ScrollView(.vertical, showsIndicators: false, content: {
-                    LazyVStack(alignment: .leading, spacing: 10) {
-                        ForEach(results) { task in
-                            HStack {
-                                RoundedRectangle(cornerRadius: 2.5)
-                                    .foregroundColor(Color("\(homeData.getStickyColor(difficulty: task.difficulty ?? "maincolor"))"))
-                                    .frame(width: 5, height: 42, alignment: .leading)
-                                    .padding(.leading, 8)
-                                VStack(alignment: .leading) {
-                                    HStack {
-                                        Text("\(task.title ?? "")")
-                                            .font(.subheadline)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(.black)
-                                        Spacer()
-                                        Text("\(homeData.getExperiencePoint(difficulty: task.difficulty ?? "0")) XP")
-                                            .font(.subheadline)
+                // Empty View ...
+                
+                if results.isEmpty {
+                    Spacer()
+                    Text("📭")
+                        .font(.system(size: 80))
+                        .foregroundColor(.black)
+                    Text("No tasks yet …")
+                        .font(.title)
+                        .foregroundColor(.black)
+                        .fontWeight(.bold)
+                    Text("Create a new task and it will show up here")
+                        .font(.subheadline)
+                        .foregroundColor(.black)
+                        .fontWeight(.light)
+                    Spacer()
+                    
+                } else {
+                    ScrollView(.vertical, showsIndicators: false, content: {
+                        LazyVStack(alignment: .leading, spacing: 10) {
+                            ForEach(results) { task in
+                                HStack {
+                                    RoundedRectangle(cornerRadius: 2.5)
+                                        .foregroundColor(Color("\(homeData.getStickyColor(difficulty: task.difficulty ?? "maincolor"))"))
+                                        .frame(width: 5, height: 42, alignment: .leading)
+                                        .padding(.leading, 8)
+                                    VStack(alignment: .leading) {
+                                        HStack {
+                                            Text("\(task.title ?? "")")
+                                                .font(.subheadline)
+                                                .fontWeight(.bold)
+                                                .foregroundColor(.black)
+                                            Spacer()
+                                            Text("\(homeData.getExperiencePoint(difficulty: task.difficulty ?? "0")) XP")
+                                                .font(.subheadline)
+                                                .fontWeight(.light)
+                                                .padding(.trailing, 12)
+                                                .foregroundColor(.black)
+                                        }
+                                        
+                                        Text("\(task.date?.getFormattedDateString(format: "EEEE, MMM d, yyyy") ?? Date().getFormattedDateString(format: "EEEE, MMM d, yyyy"))")
+                                            .font(.footnote)
                                             .fontWeight(.light)
-                                            .padding(.trailing, 12)
                                             .foregroundColor(.black)
                                     }
-                                    
-                                    Text("\(task.date?.getFormattedDateString(format: "EEEE, MMM d, yyyy") ?? Date().getFormattedDateString(format: "EEEE, MMM d, yyyy"))")
-                                        .font(.footnote)
-                                        .fontWeight(.light)
-                                        .foregroundColor(.black)
                                 }
-                            }
-                            .frame(width: 360, height: 60, alignment: .leading)
-                            .background(Color.white)
-                            .cornerRadius(8)
-                            .contextMenu(ContextMenu(menuItems: {
-                                Button(action: {homeData.editItem(item: task)}, label: {
-                                    Label(
-                                        title: { Text("Edit") },
-                                        icon: { Image(systemName: "square.and.pencil") }
-                                        )
-                                })
+                                .frame(width: 360, height: 60, alignment: .leading)
+                                .background(Color.white)
+                                .cornerRadius(8)
+                                .contextMenu(ContextMenu(menuItems: {
+                                    Button(action: {homeData.editItem(item: task)}, label: {
+                                        Label(
+                                            title: { Text("Edit") },
+                                            icon: { Image(systemName: "square.and.pencil") }
+                                            )
+                                    })
+                                        
+                                    Button(action: {
+                                        context.delete(task)
+                                        try! context.save()
+                                    }, label: {
+                                        Label(
+                                            title: { Text("Delete") },
+                                            icon: { Image(systemName: "multiply") }
+                                            )
+                                    })
                                     
-                                Button(action: {
-                                    context.delete(task)
-                                    try! context.save()
-                                }, label: {
-                                    Label(
-                                        title: { Text("Delete") },
-                                        icon: { Image(systemName: "multiply") }
-                                        )
-                                })
-                                
-                                Button(action: {
-                                    context.delete(task)
-                                    try! context.save()
-                                }, label: {
-                                    Label(
-                                        title: { Text("Mark as Done") },
-                                        icon: { Image(systemName: "checkmark") }
-                                        )
-                                })
-                            }))
+                                    Button(action: {
+                                        context.delete(task)
+                                        try! context.save()
+                                    }, label: {
+                                        Label(
+                                            title: { Text("Mark as Done") },
+                                            icon: { Image(systemName: "checkmark") }
+                                            )
+                                    })
+                                }))
+                            }
                         }
-                    }
-                    .padding()
-                })
-                .background(Color("accentcolor"))
-            }
+                        .padding()
+                    })
+                    .background(Color("accentcolor"))
+                }
+                }
+            
             // Add button
             Button(action: {homeData.isNewData.toggle()}, label: {
                 Image(systemName: "plus")
