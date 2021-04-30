@@ -17,6 +17,9 @@ struct Home: View {
     // For Deleting Data ...
     @Environment(\.managedObjectContext) var context
     
+    // User Defaults to save XP
+    @State private var experiencePoint = UserDefaults.standard.integer(forKey: "xp")
+    
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom), content: {
             Color("accentcolor").edgesIgnoringSafeArea(.all)
@@ -53,6 +56,13 @@ struct Home: View {
                                 Spacer()
                                 Button(action: {homeData.isPresentedBadgesView.toggle()}, label: {
                                     Image(systemName: "star.circle")
+                                        .foregroundColor(.white)
+                                        .font(Font.system(size: 30, weight: .regular))
+                                        .padding(.vertical, 8)
+                                        .padding(.top, 6)
+                                })
+                                Button(action: {homeData.isPresentedArchiveView.toggle()}, label: {
+                                    Image(systemName: "archivebox.circle")
                                         .foregroundColor(.white)
                                         .font(Font.system(size: 30, weight: .regular))
                                         .padding(.trailing, 8)
@@ -125,7 +135,7 @@ struct Home: View {
                                                 .fontWeight(.bold)
                                                 .foregroundColor(.black)
                                             Spacer()
-                                            Text("\(homeData.getExperiencePoint(difficulty: task.difficulty ?? "0")) XP")
+                                            Text("\(homeData.getExperiencePoint(difficulty: task.difficulty ?? "Easy")) XP")
                                                 .font(.subheadline)
                                                 .fontWeight(.light)
                                                 .padding(.trailing, 12)
@@ -162,6 +172,7 @@ struct Home: View {
                                     Button(action: {
                                         context.delete(task)
                                         try! context.save()
+                                        UserDefaults.standard.set(homeData.getExperiencePoint(difficulty: task.difficulty ?? "Easy"), forKey: "xp")
                                     }, label: {
                                         Label(
                                             title: { Text("Mark as Done") },
@@ -198,6 +209,9 @@ struct Home: View {
         })
         .sheet(isPresented: $homeData.isPresentedBadgesView, content: {
             Badges(homeData: homeData)
+        })
+        .sheet(isPresented: $homeData.isPresentedArchiveView, content: {
+            Archive(homeData: homeData)
         })
     }
 }
