@@ -27,17 +27,14 @@ struct Home: View {
     var sumXP: Int {
         Int(tasks.reduce(0) { $0 + $1.xp })
     }
-    
     var currentXP: Int {
         Int(progress.reduce(0) { $0 + $1.xpNow })
     }
-    
     var levelPercentage: CGFloat {
         CGFloat(progress.reduce(0) { $0 + $1.xpNow }) / CGFloat(progress.last?.xpToComplete ?? 1)
     }
     
-    // Update UI when value changes
-    @State var updater: Bool = false
+    @State var currentLevel = UserDefaults.standard.integer(forKey: "level")
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom), content: {
@@ -68,7 +65,7 @@ struct Home: View {
                         
                         VStack(alignment: .leading, spacing: nil, content: {
                             HStack {
-                                Text("Level \(levelTask.getLevelDetail().level)")
+                                Text("Level \(levelTask.getLevelDetail(currentLevel).level)")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
@@ -78,17 +75,17 @@ struct Home: View {
                                         .foregroundColor(.white)
                                         .font(Font.system(size: 30, weight: .regular))
                                         .padding(.vertical, 8)
-                                        .padding(.top, 6)
+                                        .padding(.top, 2)
                                 })
                                 Button(action: {homeData.isPresentedArchiveView.toggle()}, label: {
                                     Image(systemName: "archivebox.circle")
                                         .foregroundColor(.white)
                                         .font(Font.system(size: 30, weight: .regular))
                                         .padding(.trailing, 8)
-                                        .padding(.top, 6)
+                                        .padding(.top, 2)
                                 })
                             }
-                            Text("\(currentXP) / \(levelTask.getLevelDetail().xpToComplete) XP")
+                            Text("\(currentXP) / \(levelTask.getLevelDetail(currentLevel).xpToComplete) XP")
                                 .font(.subheadline)
                                 .fontWeight(.light)
                                 .foregroundColor(.white)
@@ -124,7 +121,6 @@ struct Home: View {
                 .background(Color("accentcolor"))
                 
                 // Empty View ...
-                
                 if tasks.isEmpty {
                     Spacer()
                     Text("📭")
@@ -192,13 +188,20 @@ struct Home: View {
                                     
                                     Button(action: {
                                         contextTask.delete(task)
-                                        updater.toggle()
+                                        
+                                        let xpToCompleteCurrentLevel = levelTask.getLevelDetail(currentLevel).xpToComplete
                                         levelProgress.writeProgress(
-                                            detail: Level(levelTask.getLevelDetail().level,
-                                                          xpToComplete: levelTask.getLevelDetail().xpToComplete,
+                                            detail: Level(currentLevel,
+                                                          xpToComplete: xpToCompleteCurrentLevel,
                                                           xpNow: Int(task.xp)),
                                             context: contextLevel)
                                         try! contextTask.save()
+                                        
+                                        if currentXP >= xpToCompleteCurrentLevel {
+                                            self.currentLevel += 1
+                                            UserDefaults.standard.set(self.currentLevel, forKey: "level")
+                                            print(currentLevel)
+                                        }
                                     }, label: {
                                         Label(
                                             title: { Text("Mark as Done") },
@@ -216,7 +219,7 @@ struct Home: View {
             
             // Add button
             Button(action: {homeData.isNewData.toggle()
-                print(levelPercentage)
+                print(currentLevel)
             }, label: {
                 Image(systemName: "plus")
                     .font(Font.system(size: 40, weight: .regular))

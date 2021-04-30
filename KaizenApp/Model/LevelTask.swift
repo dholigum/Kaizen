@@ -21,21 +21,9 @@ struct LevelTask {
         Level(10, xpToComplete: 50000, xpNow: 0)
     ]
     
-    var levelIndex = 0
-    
-    mutating func updateXPNow(value: Int) {
+    func getLevelDetail(_ level: Int) -> (level: Int, xpToComplete: Int, xpNow: Int) {
         
-        // Update xpNow with value
-        levelingProgress[levelIndex].xpNow = value
-    }
-    
-    mutating func nextLevel(to newLevel: Int) {
-        
-        // Update current level
-        levelIndex = newLevel - 1
-    }
-    
-    func getLevelDetail() -> (level: Int, xpToComplete: Int, xpNow: Int) {
+        var levelIndex = level
         
         let levelNow = levelingProgress[levelIndex].level
         let xpToCompleteNow = levelingProgress[levelIndex].xpToComplete

@@ -13,6 +13,7 @@ class LevelViewModel: ObservableObject {
     @Published var xpNow = 0
     @Published var xpToComplete = 0
     
+    
     func writeProgress(detail: Level, context: NSManagedObjectContext) {
         
         // Populate with progress from completed task
