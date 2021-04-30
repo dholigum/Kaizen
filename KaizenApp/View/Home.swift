@@ -9,6 +9,10 @@ import SwiftUI
 import CoreData
 
 struct Home: View {
+    
+    @State var currentLevel = UserDefaults.standard.integer(forKey: "level")
+    @State var excessiveXP = 0
+    
     // State object from viewModel
     @StateObject var homeData = TaskViewModel()
     @StateObject var levelProgress = LevelViewModel()
@@ -28,13 +32,16 @@ struct Home: View {
         Int(tasks.reduce(0) { $0 + $1.xp })
     }
     var currentXP: Int {
-        Int(progress.reduce(0) { $0 + $1.xpNow })
+        Int(progress
+                .filter { $0.level == currentLevel + 1 }
+                .reduce(0) { $0 + $1.xpNow })
     }
     var levelPercentage: CGFloat {
-        CGFloat(progress.reduce(0) { $0 + $1.xpNow }) / CGFloat(progress.last?.xpToComplete ?? 1)
+        CGFloat(progress
+                    .filter { $0.level == currentLevel + 1 }
+                    .reduce(0) { $0 + $1.xpNow })
+                / CGFloat(progress.last?.xpToComplete ?? 1)
     }
-    
-    @State var currentLevel = UserDefaults.standard.integer(forKey: "level")
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom), content: {
@@ -189,19 +196,27 @@ struct Home: View {
                                     Button(action: {
                                         contextTask.delete(task)
                                         
-                                        let xpToCompleteCurrentLevel = levelTask.getLevelDetail(currentLevel).xpToComplete
-                                        levelProgress.writeProgress(
-                                            detail: Level(currentLevel,
-                                                          xpToComplete: xpToCompleteCurrentLevel,
-                                                          xpNow: Int(task.xp)),
-                                            context: contextLevel)
-                                        try! contextTask.save()
+                                        var xpToCompleteCurrentLevel = levelTask.getLevelDetail(currentLevel).xpToComplete
+                                        
                                         
                                         if currentXP >= xpToCompleteCurrentLevel {
+                                            self.excessiveXP = currentXP - xpToCompleteCurrentLevel
+                                            
                                             self.currentLevel += 1
                                             UserDefaults.standard.set(self.currentLevel, forKey: "level")
-                                            print(currentLevel)
+                                            
+                                            xpToCompleteCurrentLevel = levelTask.getLevelDetail(currentLevel).xpToComplete
                                         }
+                                        
+                                        levelProgress.writeProgress(
+                                            detail: Level(currentLevel + 1,
+                                                          xpToComplete: xpToCompleteCurrentLevel,
+                                                          xpNow: Int(task.xp) + excessiveXP),
+                                            context: contextLevel)
+                                        
+                                        try! contextTask.save()
+                                        self.excessiveXP = 0
+                                        
                                     }, label: {
                                         Label(
                                             title: { Text("Mark as Done") },
