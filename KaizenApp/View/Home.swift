@@ -27,7 +27,6 @@ struct Home: View {
                         .gradientForeground(colors: [Color("maincolor"), Color("maincolor2")])
                         .frame(height: 200)
                     HStack {
-                        
                         ZStack {
                             Circle()
                                 .trim(from: 0, to: 1)
@@ -52,11 +51,12 @@ struct Home: View {
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
                                 Spacer()
-                                Button(action: {}, label: {
+                                Button(action: {homeData.isPresentedBadgesView.toggle()}, label: {
                                     Image(systemName: "star.circle")
                                         .foregroundColor(.white)
                                         .font(Font.system(size: 30, weight: .regular))
-                                        .padding(.trailing)
+                                        .padding(.trailing, 8)
+                                        .padding(.top, 6)
                                 })
                             }
                             Text("350 / 500 XP")
@@ -189,20 +189,24 @@ struct Home: View {
                     .clipShape(Circle())
             })
             .padding()
+            
         })
         .ignoresSafeArea(.all, edges: .top)
         .background(Color.black.opacity(0.06).ignoresSafeArea(.all, edges: .all))
         .sheet(isPresented: $homeData.isNewData, content: {
             ModalView(homeData: homeData)
         })
+        .sheet(isPresented: $homeData.isPresentedBadgesView, content: {
+            Badges(homeData: homeData)
+        })
     }
 }
 
 extension View {
     public func gradientForeground(colors: [Color]) -> some View {
-        self.overlay(LinearGradient(gradient: .init(colors: colors),
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing))
+        self.overlay(
+            LinearGradient(gradient: .init(colors: colors),
+                           startPoint: .topLeading, endPoint: .bottomTrailing))
             .mask(self)
     }
 }

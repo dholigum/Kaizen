@@ -15,6 +15,7 @@ class HomeViewModel: ObservableObject {
     
     // For NewData sheet
     @Published var isNewData = false
+    @Published var isPresentedBadgesView = false
     
     // Storing Update Item ...
     @Published var updateItem: Task!
