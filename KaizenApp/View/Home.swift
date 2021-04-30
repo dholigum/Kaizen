@@ -9,16 +9,13 @@ import SwiftUI
 import CoreData
 
 struct Home: View {
-    @StateObject var homeData = HomeViewModel()
+    @StateObject var homeData = TaskViewModel()
     
     // Fetching Data ...
     @FetchRequest(entity: Task.entity(), sortDescriptors: [NSSortDescriptor(key: "date", ascending: true)], animation: .spring()) var results : FetchedResults<Task>
     
-    // For Deleting Data ...
+    // For Saving and Deleting Data ...
     @Environment(\.managedObjectContext) var context
-    
-    // User Defaults to save XP
-    @State private var experiencePoint = UserDefaults.standard.integer(forKey: "xp")
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom), content: {
@@ -172,7 +169,6 @@ struct Home: View {
                                     Button(action: {
                                         context.delete(task)
                                         try! context.save()
-                                        UserDefaults.standard.set(homeData.getExperiencePoint(difficulty: task.difficulty ?? "Easy"), forKey: "xp")
                                     }, label: {
                                         Label(
                                             title: { Text("Mark as Done") },
@@ -200,12 +196,13 @@ struct Home: View {
                     .clipShape(Circle())
             })
             .padding()
+            .padding(.trailing)
             
         })
         .ignoresSafeArea(.all, edges: .top)
         .background(Color.black.opacity(0.06).ignoresSafeArea(.all, edges: .all))
         .sheet(isPresented: $homeData.isNewData, content: {
-            ModalView(homeData: homeData)
+            TaskModal(homeData: homeData)
         })
         .sheet(isPresented: $homeData.isPresentedBadgesView, content: {
             Badges(homeData: homeData)

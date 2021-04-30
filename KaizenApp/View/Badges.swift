@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Badges: View {
-    @ObservedObject var homeData = HomeViewModel()
+    @ObservedObject var homeData = TaskViewModel()
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {

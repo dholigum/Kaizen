@@ -1,5 +1,5 @@
 //
-//  HomeViewModel.swift
+//  TaskViewModel.swift
 //  KaizenApp
 //
 //  Created by Syahrul Apple Developer BINUS on 29/04/21.
@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-class HomeViewModel: ObservableObject {
+class TaskViewModel: ObservableObject {
     @Published var title = ""
     @Published var date = Date()
     @Published var difficulty = ""

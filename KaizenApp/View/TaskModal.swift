@@ -1,5 +1,5 @@
 //
-//  ModalView.swift
+//  TaskModal.swift
 //  KaizenApp
 //
 //  Created by Syahrul Apple Developer BINUS on 29/04/21.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct ModalView: View {
-    @ObservedObject var homeData = HomeViewModel()
+struct TaskModal: View {
+    @ObservedObject var homeData = TaskViewModel()
     @Environment(\.managedObjectContext) var context
     
     var body: some View {
