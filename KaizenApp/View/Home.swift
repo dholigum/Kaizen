@@ -9,13 +9,35 @@ import SwiftUI
 import CoreData
 
 struct Home: View {
+    // State object from viewModel
     @StateObject var homeData = TaskViewModel()
+    @StateObject var levelProgress = LevelViewModel()
     
     // Fetching Data ...
-    @FetchRequest(entity: Task.entity(), sortDescriptors: [NSSortDescriptor(key: "date", ascending: true)], animation: .spring()) var results : FetchedResults<Task>
+    @FetchRequest(entity: Task.entity(), sortDescriptors: [NSSortDescriptor(key: "date", ascending: true)], animation: .spring()) var tasks : FetchedResults<Task>
+    @FetchRequest(entity: Progress.entity(), sortDescriptors: [NSSortDescriptor(key: "level", ascending: true)], animation: .spring()) var progress : FetchedResults<Progress>
     
     // For Saving and Deleting Data ...
-    @Environment(\.managedObjectContext) var context
+    @Environment(\.managedObjectContext) var contextTask
+    @Environment(\.managedObjectContext) var contextLevel
+    
+    var levelTask = LevelTask()
+    
+    // Computed properties
+    var sumXP: Int {
+        Int(tasks.reduce(0) { $0 + $1.xp })
+    }
+    
+    var currentXP: Int {
+        Int(progress.reduce(0) { $0 + $1.xpNow })
+    }
+    
+    var levelPercentage: Double {
+        Double(progress.reduce(0) { $0 + $1.xpNow }) / Double(progress.last?.xpToComplete ?? 0)
+    }
+    
+    // Update UI when value changes
+    @State var updater: Bool = false
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom), content: {
@@ -46,7 +68,7 @@ struct Home: View {
                         
                         VStack(alignment: .leading, spacing: nil, content: {
                             HStack {
-                                Text("Level 2")
+                                Text("Level \(levelTask.getLevelDetail().level)")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
@@ -66,22 +88,24 @@ struct Home: View {
                                         .padding(.top, 6)
                                 })
                             }
-                            Text("350 / 500 XP")
+                            Text("\(currentXP) / \(levelTask.getLevelDetail().xpToComplete) XP")
                                 .font(.subheadline)
                                 .fontWeight(.light)
                                 .foregroundColor(.white)
-                                .padding(.vertical, 1)
+                                .padding(.top, -16)
+                                .padding(.bottom, 2)
                             HStack {
                                 Text("💡 ")
                                     .font(.footnote)
                                     .fontWeight(.light)
                                     .foregroundColor(.white)
                                     .padding(.trailing, -8)
-                                Text("Finish more tasks to gain more 600 experience points")
+                                Text("Finish more tasks to gain more \(sumXP) experience points")
                                     .font(.footnote)
                                     .fontWeight(.light)
                                     .foregroundColor(.white)
                             }
+                            .padding(.leading, -4)
                         })
                         .padding()
                         .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
@@ -101,7 +125,7 @@ struct Home: View {
                 
                 // Empty View ...
                 
-                if results.isEmpty {
+                if tasks.isEmpty {
                     Spacer()
                     Text("📭")
                         .font(.system(size: 80))
@@ -119,7 +143,7 @@ struct Home: View {
                 } else {
                     ScrollView(.vertical, showsIndicators: false, content: {
                         LazyVStack(alignment: .leading, spacing: 10) {
-                            ForEach(results) { task in
+                            ForEach(tasks) { task in
                                 HStack {
                                     RoundedRectangle(cornerRadius: 2.5)
                                         .foregroundColor(Color("\(homeData.getStickyColor(difficulty: task.difficulty ?? "maincolor"))"))
@@ -132,7 +156,7 @@ struct Home: View {
                                                 .fontWeight(.bold)
                                                 .foregroundColor(.black)
                                             Spacer()
-                                            Text("\(homeData.getExperiencePoint(difficulty: task.difficulty ?? "Easy")) XP")
+                                            Text("\(task.xp) XP")
                                                 .font(.subheadline)
                                                 .fontWeight(.light)
                                                 .padding(.trailing, 12)
@@ -157,8 +181,8 @@ struct Home: View {
                                     })
                                     
                                     Button(action: {
-                                        context.delete(task)
-                                        try! context.save()
+                                        contextTask.delete(task)
+                                        try! contextTask.save()
                                     }, label: {
                                         Label(
                                             title: { Text("Delete") },
@@ -167,8 +191,14 @@ struct Home: View {
                                     })
                                     
                                     Button(action: {
-                                        context.delete(task)
-                                        try! context.save()
+                                        contextTask.delete(task)
+                                        updater.toggle()
+                                        levelProgress.writeProgress(
+                                            detail: Level(levelTask.getLevelDetail().level,
+                                                          xpToComplete: levelTask.getLevelDetail().xpToComplete,
+                                                          xpNow: Int(task.xp)),
+                                            context: contextLevel)
+                                        try! contextTask.save()
                                     }, label: {
                                         Label(
                                             title: { Text("Mark as Done") },

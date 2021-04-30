@@ -10,6 +10,8 @@ import SwiftUI
 struct Archive: View {
     @ObservedObject var homeData = TaskViewModel()
     
+    @FetchRequest(entity: Progress.entity(), sortDescriptors: [NSSortDescriptor(key: "level", ascending: true)], animation: .spring()) var results : FetchedResults<Progress>
+    
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
             Color("accentcolor").edgesIgnoringSafeArea(.all)
@@ -24,6 +26,7 @@ struct Archive: View {
                 
                 ScrollView(.vertical, showsIndicators: false, content: {
                     LazyVStack(alignment: .leading, spacing: 10) {
+                        ForEach(results) { progress in
                             HStack {
                                 RoundedRectangle(cornerRadius: 2.5)
                                     .foregroundColor(Color("maincolor"))
@@ -31,19 +34,19 @@ struct Archive: View {
                                     .padding(.leading, 8)
                                 VStack(alignment: .leading) {
                                     HStack {
-                                        Text("Learning WatchOS")
+                                        Text("xpNow: \(progress.xpNow)")
                                             .font(.subheadline)
                                             .fontWeight(.bold)
                                             .foregroundColor(.black)
                                         Spacer()
-                                        Text("100 XP")
+                                        Text("Level: \(progress.level)")
                                             .font(.subheadline)
                                             .fontWeight(.light)
                                             .padding(.trailing, 12)
                                             .foregroundColor(.black)
                                     }
                                     
-                                    Text("Friday, April 30, 2021")
+                                    Text("xpToComplete: \(progress.xpToComplete)")
                                         .font(.footnote)
                                         .fontWeight(.light)
                                         .foregroundColor(.black)
@@ -74,6 +77,7 @@ struct Archive: View {
                                     )
                                 })
                             }))
+                        }
                     }
                     .padding()
                 })

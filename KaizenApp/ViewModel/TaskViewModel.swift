@@ -13,19 +13,7 @@ class TaskViewModel: ObservableObject {
     @Published var date = Date()
     @Published var difficulty = ""
     
-    // For NewData sheet
-    @Published var isNewData = false
-    @Published var isPresentedBadgesView = false
-    @Published var isPresentedArchiveView = false
-    
-    // Storing Update Item ...
-    @Published var updateItem: Task!
-    
-    func selectDifficulty(value: String) {
-        difficulty = value
-    }
-    
-    func getExperiencePoint(difficulty: String) -> Int {
+    var xp: Int {
         switch difficulty {
         case "Easy":
             return 50
@@ -38,6 +26,18 @@ class TaskViewModel: ObservableObject {
         default:
             return 0
         }
+    }
+    
+    // For NewData sheet
+    @Published var isNewData = false
+    @Published var isPresentedBadgesView = false
+    @Published var isPresentedArchiveView = false
+    
+    // Storing Update Item ...
+    @Published var updateItem: Task!
+    
+    func selectDifficulty(value: String) {
+        difficulty = value
     }
     
     func getStickyColor(difficulty: String) -> String {
@@ -62,6 +62,7 @@ class TaskViewModel: ObservableObject {
             updateItem.date = date
             updateItem.title = title
             updateItem.difficulty = difficulty
+            updateItem.xp = Int32(xp)
             
             try! context.save()
             
@@ -79,6 +80,7 @@ class TaskViewModel: ObservableObject {
         newTask.date = date
         newTask.title = title
         newTask.difficulty = difficulty
+        newTask.xp = Int32(xp)
         
         // Saving data ...
         do {

@@ -23,9 +23,24 @@ struct LevelTask {
     
     var levelIndex = 0
     
-    mutating func updateXPNow(levelId: Int, value: Int) {
+    mutating func updateXPNow(value: Int) {
         
         // Update xpNow with value
-        self.levelingProgress[levelId].xpNow = value
+        levelingProgress[levelIndex].xpNow = value
+    }
+    
+    mutating func nextLevel(to newLevel: Int) {
+        
+        // Update current level
+        levelIndex = newLevel - 1
+    }
+    
+    func getLevelDetail() -> (level: Int, xpToComplete: Int, xpNow: Int) {
+        
+        let levelNow = levelingProgress[levelIndex].level
+        let xpToCompleteNow = levelingProgress[levelIndex].xpToComplete
+        let xpNow = levelingProgress[levelIndex].xpNow
+        
+        return (level: levelNow, xpToComplete: xpToCompleteNow, xpNow: xpNow)
     }
 }

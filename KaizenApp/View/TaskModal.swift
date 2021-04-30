@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TaskModal: View {
     @ObservedObject var homeData = TaskViewModel()
-    @Environment(\.managedObjectContext) var context
+    @Environment(\.managedObjectContext) var contextTask
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
@@ -81,7 +81,7 @@ struct TaskModal: View {
                 Spacer()
                 
                 // Add or Update task button
-                Button(action: {homeData.writeData(context: context)}, label: {
+                Button(action: {homeData.writeData(context: contextTask)}, label: {
                     Text(homeData.updateItem == nil ? "Add Now" : "Update")
                         .font(.title2)
                         .foregroundColor(.white)

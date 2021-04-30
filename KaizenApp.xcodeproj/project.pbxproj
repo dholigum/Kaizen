@@ -13,6 +13,7 @@
 		2FB612F1263BCCF50096827E /* Archive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB612F0263BCCF50096827E /* Archive.swift */; };
 		2FB612F5263BD3C20096827E /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB612F4263BD3C20096827E /* Level.swift */; };
 		2FB612F7263BD3D30096827E /* LevelTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB612F6263BD3D30096827E /* LevelTask.swift */; };
+		2FB612F9263BEE490096827E /* LevelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB612F8263BEE490096827E /* LevelViewModel.swift */; };
 		2FD900BE263B091000EC14B2 /* Badges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD900BD263B091000EC14B2 /* Badges.swift */; };
 		2FE0CF41263A414C0098447E /* KaizenAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE0CF40263A414C0098447E /* KaizenAppApp.swift */; };
 		2FE0CF43263A414C0098447E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE0CF42263A414C0098447E /* ContentView.swift */; };
@@ -31,6 +32,7 @@
 		2FB612F0263BCCF50096827E /* Archive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Archive.swift; sourceTree = "<group>"; };
 		2FB612F4263BD3C20096827E /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		2FB612F6263BD3D30096827E /* LevelTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelTask.swift; sourceTree = "<group>"; };
+		2FB612F8263BEE490096827E /* LevelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelViewModel.swift; sourceTree = "<group>"; };
 		2FD900BD263B091000EC14B2 /* Badges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badges.swift; sourceTree = "<group>"; };
 		2FE0CF3D263A414C0098447E /* KaizenApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KaizenApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FE0CF40263A414C0098447E /* KaizenAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaizenAppApp.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				2F453FC7263A6968002FF42C /* TaskViewModel.swift */,
+				2FB612F8263BEE490096827E /* LevelViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 				2FE0CF4D263A414D0098447E /* KaizenApp.xcdatamodeld in Sources */,
 				2FE0CF5F263A55DC0098447E /* Home.swift in Sources */,
 				2FD900BE263B091000EC14B2 /* Badges.swift in Sources */,
+				2FB612F9263BEE490096827E /* LevelViewModel.swift in Sources */,
 				2FE0CF43263A414C0098447E /* ContentView.swift in Sources */,
 				2FE0CF41263A414C0098447E /* KaizenAppApp.swift in Sources */,
 			);

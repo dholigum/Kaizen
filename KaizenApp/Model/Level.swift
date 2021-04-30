@@ -8,12 +8,12 @@
 import Foundation
 
 struct Level {
-    let id: Int
+    let level: Int
     let xpToComplete: Int
     var xpNow: Int
     
-    init(_ id: Int, xpToComplete: Int, xpNow: Int) {
-        self.id = id
+    init(_ level: Int, xpToComplete: Int, xpNow: Int) {
+        self.level = level
         self.xpToComplete = xpToComplete
         self.xpNow = xpNow
     }
