@@ -32,8 +32,8 @@ struct Home: View {
         Int(progress.reduce(0) { $0 + $1.xpNow })
     }
     
-    var levelPercentage: Double {
-        Double(progress.reduce(0) { $0 + $1.xpNow }) / Double(progress.last?.xpToComplete ?? 0)
+    var levelPercentage: CGFloat {
+        CGFloat(progress.reduce(0) { $0 + $1.xpNow }) / CGFloat(progress.last?.xpToComplete ?? 1)
     }
     
     // Update UI when value changes
@@ -58,7 +58,7 @@ struct Home: View {
                                 .padding(.top, UIApplication.shared.windows.first!.safeAreaInsets.top + CGFloat(8))
                             
                             Circle()
-                                .trim(from: 0, to: 0.75)
+                                .trim(from: 0, to: levelPercentage)
                                 .stroke(style: StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round))
                                 .foregroundColor(Color.black)
                                 .frame(width: 80, height: 80)
@@ -215,7 +215,9 @@ struct Home: View {
             }
             
             // Add button
-            Button(action: {homeData.isNewData.toggle()}, label: {
+            Button(action: {homeData.isNewData.toggle()
+                print(levelPercentage)
+            }, label: {
                 Image(systemName: "plus")
                     .font(Font.system(size: 40, weight: .regular))
                     .foregroundColor(.white)
