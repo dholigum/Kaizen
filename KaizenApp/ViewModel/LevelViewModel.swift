@@ -13,6 +13,8 @@ class LevelViewModel: ObservableObject {
     @Published var xpNow = 0
     @Published var xpToComplete = 0
     
+    // For Presenting Level-Up Alert sheet
+    @Published var isLevelUp = false
     
     func writeProgress(detail: Level, context: NSManagedObjectContext) {
         
@@ -29,7 +31,7 @@ class LevelViewModel: ObservableObject {
         // Saving data ...
         do {
             try context.save()
-            
+            isLevelUp.toggle()
             // Closing view when success
             level = 0
             xpNow = 0

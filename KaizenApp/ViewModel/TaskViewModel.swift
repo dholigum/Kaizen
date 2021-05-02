@@ -28,7 +28,7 @@ class TaskViewModel: ObservableObject {
         }
     }
     
-    // For NewData sheet
+    // For Presenting Modal sheet
     @Published var isNewData = false
     @Published var isPresentedBadgesView = false
     @Published var isPresentedArchiveView = false

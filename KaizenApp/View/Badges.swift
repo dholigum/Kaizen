@@ -11,10 +11,10 @@ struct Badges: View {
     @ObservedObject var homeData = TaskViewModel()
     
     var body: some View {
-        ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
+        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
             Color("accentcolor").edgesIgnoringSafeArea(.all)
             
-            VStack {
+            VStack(alignment: .leading) {
                 Text("Badges")
                     .font(.largeTitle)
                     .fontWeight(.bold)
@@ -24,6 +24,15 @@ struct Badges: View {
                 
             }
             .padding()
+            
+            Button(action: {homeData.isPresentedBadgesView.toggle()}, label: {
+                Image(systemName: "xmark")
+                    .foregroundColor(.black)
+                    .font(Font.system(size: 24, weight: .regular))
+                    .padding(.trailing)
+                    .padding(.top)
+                    .padding(.top, 8)
+            })
         }
     }
 }

@@ -12,7 +12,7 @@ struct TaskModal: View {
     @Environment(\.managedObjectContext) var contextTask
     
     var body: some View {
-        ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
+        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
             Color("accentcolor").edgesIgnoringSafeArea(.all)
             
             VStack(alignment: .leading) {
@@ -98,6 +98,14 @@ struct TaskModal: View {
             }
             .padding()
             
+            Button(action: {homeData.isNewData.toggle()}, label: {
+                Image(systemName: "xmark")
+                    .foregroundColor(.black)
+                    .font(Font.system(size: 24, weight: .regular))
+                    .padding(.trailing)
+                    .padding(.top)
+                    .padding(.top, 8)
+            })
         }
     }
 }

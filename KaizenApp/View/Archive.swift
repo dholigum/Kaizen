@@ -13,7 +13,7 @@ struct Archive: View {
     @FetchRequest(entity: Progress.entity(), sortDescriptors: [NSSortDescriptor(key: "level", ascending: true)], animation: .spring()) var results : FetchedResults<Progress>
     
     var body: some View {
-        ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
+        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
             Color("accentcolor").edgesIgnoringSafeArea(.all)
             
             VStack(alignment: .leading) {
@@ -84,6 +84,15 @@ struct Archive: View {
                 .background(Color("accentcolor"))
             }
             .padding()
+            
+            Button(action: {homeData.isPresentedArchiveView.toggle()}, label: {
+                Image(systemName: "xmark")
+                    .foregroundColor(.black)
+                    .font(Font.system(size: 24, weight: .regular))
+                    .padding(.trailing)
+                    .padding(.top)
+                    .padding(.top, 8)
+            })
         }
     }
 }

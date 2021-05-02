@@ -11,7 +11,10 @@ import CoreData
 struct Home: View {
     
     @State var currentLevel = UserDefaults.standard.integer(forKey: "level")
-    @State var excessiveXP = 0
+    
+    // State to read value from LevelUp Alert
+    @State var nextLevelXPToComplete = 0
+    @State var nextLevelStartingXP = 0
     
     // State object from viewModel
     @StateObject var homeData = TaskViewModel()
@@ -36,11 +39,19 @@ struct Home: View {
                 .filter { $0.level == currentLevel + 1 }
                 .reduce(0) { $0 + $1.xpNow })
     }
+    var currentXPToComplete: Int {
+        Int(progress.last?.xpToComplete ?? 1)
+    }
     var levelPercentage: CGFloat {
         CGFloat(progress
                     .filter { $0.level == currentLevel + 1 }
                     .reduce(0) { $0 + $1.xpNow })
                 / CGFloat(progress.last?.xpToComplete ?? 1)
+    }
+    var residualXP: Int {
+        Int(progress
+                .filter { $0.level == currentLevel + 1 }
+                .reduce(0) { $0 + $1.xpNow }) - Int(CGFloat(progress.last?.xpToComplete ?? 1))
     }
     
     var body: some View {
@@ -62,7 +73,7 @@ struct Home: View {
                                 .padding(.top, UIApplication.shared.windows.first!.safeAreaInsets.top + CGFloat(8))
                             
                             Circle()
-                                .trim(from: 0, to: levelPercentage)
+                                .trim(from: 0, to: nextLevelXPToComplete == 0 ? levelPercentage : CGFloat(nextLevelStartingXP) / CGFloat(nextLevelXPToComplete))
                                 .stroke(style: StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round))
                                 .foregroundColor(Color.black)
                                 .frame(width: 80, height: 80)
@@ -72,7 +83,7 @@ struct Home: View {
                         
                         VStack(alignment: .leading, spacing: nil, content: {
                             HStack {
-                                Text("Level \(levelTask.getLevelDetail(currentLevel).level)")
+                                Text("Level \(nextLevelXPToComplete == 0 ? levelTask.getLevelDetail(currentLevel).level : levelTask.getLevelDetail(currentLevel).level + 1)")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
@@ -92,7 +103,7 @@ struct Home: View {
                                         .padding(.top, 2)
                                 })
                             }
-                            Text("\(currentXP) / \(levelTask.getLevelDetail(currentLevel).xpToComplete) XP")
+                            Text("\(nextLevelXPToComplete == 0 ? currentXP : nextLevelStartingXP) / \(currentXPToComplete == 1 ? levelTask.getLevelDetail(currentLevel).xpToComplete : currentXPToComplete) XP")
                                 .font(.subheadline)
                                 .fontWeight(.light)
                                 .foregroundColor(.white)
@@ -197,11 +208,8 @@ struct Home: View {
                                         contextTask.delete(task)
                                         
                                         var xpToCompleteCurrentLevel = levelTask.getLevelDetail(currentLevel).xpToComplete
-                                        
-                                        
+                                    
                                         if currentXP >= xpToCompleteCurrentLevel {
-                                            self.excessiveXP = currentXP - xpToCompleteCurrentLevel
-                                            
                                             self.currentLevel += 1
                                             UserDefaults.standard.set(self.currentLevel, forKey: "level")
                                             
@@ -211,11 +219,14 @@ struct Home: View {
                                         levelProgress.writeProgress(
                                             detail: Level(currentLevel + 1,
                                                           xpToComplete: xpToCompleteCurrentLevel,
-                                                          xpNow: Int(task.xp) + excessiveXP),
+                                                          xpNow: Int(task.xp)),
                                             context: contextLevel)
                                         
                                         try! contextTask.save()
-                                        self.excessiveXP = 0
+                                        
+                                        // Reset this temporary value back
+                                        nextLevelXPToComplete = 0
+                                        nextLevelStartingXP = 0
                                         
                                     }, label: {
                                         Label(
@@ -233,9 +244,7 @@ struct Home: View {
             }
             
             // Add button
-            Button(action: {homeData.isNewData.toggle()
-                print(currentLevel)
-            }, label: {
+            Button(action: {homeData.isNewData.toggle()}, label: {
                 Image(systemName: "plus")
                     .font(Font.system(size: 40, weight: .regular))
                     .foregroundColor(.white)
@@ -247,6 +256,19 @@ struct Home: View {
             })
             .padding()
             .padding(.trailing)
+            
+            // Show Level Up Alert
+            if  (nextLevelXPToComplete == 0 ? levelPercentage : CGFloat(nextLevelStartingXP) / CGFloat(nextLevelXPToComplete)) >= 1 {
+                
+                LevelUpAlert(nextLevelXPToComplete: $nextLevelXPToComplete, nextLevelStartingXP: $nextLevelStartingXP, residualXP: residualXP)
+                    .alignmentGuide(.trailing, computeValue: { dimension in
+                        dimension[HorizontalAlignment.trailing] + 28
+                    })
+                    .alignmentGuide(.bottom, computeValue: { _ in
+                        UIScreen.main.bounds.size.height / 2
+                    })
+                    
+            }
             
         })
         .ignoresSafeArea(.all, edges: .top)

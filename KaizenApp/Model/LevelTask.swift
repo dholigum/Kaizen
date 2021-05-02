@@ -18,12 +18,25 @@ struct LevelTask {
         Level(7, xpToComplete: 15000, xpNow: 0),
         Level(8, xpToComplete: 24000, xpNow: 0),
         Level(9, xpToComplete: 36000, xpNow: 0),
-        Level(10, xpToComplete: 50000, xpNow: 0)
+        Level(10, xpToComplete: 50000, xpNow: 0),
+        Level(11, xpToComplete: 9999999, xpNow: 0)
     ]
+    
+    func getCurrentLevelXPToComplete(_ level: Int) -> Int {
+        
+        // Normalize level with the index array
+        let levelIndex = level - 1
+        
+        if levelIndex > 10 {
+            return levelingProgress[10].xpToComplete
+        }
+        
+        return levelingProgress[levelIndex].xpToComplete
+    }
     
     func getLevelDetail(_ level: Int) -> (level: Int, xpToComplete: Int, xpNow: Int) {
         
-        var levelIndex = level
+        let levelIndex = level
         
         let levelNow = levelingProgress[levelIndex].level
         let xpToCompleteNow = levelingProgress[levelIndex].xpToComplete

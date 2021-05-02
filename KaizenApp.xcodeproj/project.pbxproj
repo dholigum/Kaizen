@@ -10,6 +10,7 @@
 		2F453FC5263A6864002FF42C /* TaskModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F453FC4263A6864002FF42C /* TaskModal.swift */; };
 		2F453FC8263A6968002FF42C /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F453FC7263A6968002FF42C /* TaskViewModel.swift */; };
 		2F453FD0263A92D3002FF42C /* DifficultyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F453FCF263A92D3002FF42C /* DifficultyButton.swift */; };
+		2F658A4A263E3E0B0017D48E /* LevelUpAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F658A49263E3E0B0017D48E /* LevelUpAlert.swift */; };
 		2FB612F1263BCCF50096827E /* Archive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB612F0263BCCF50096827E /* Archive.swift */; };
 		2FB612F5263BD3C20096827E /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB612F4263BD3C20096827E /* Level.swift */; };
 		2FB612F7263BD3D30096827E /* LevelTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB612F6263BD3D30096827E /* LevelTask.swift */; };
@@ -29,6 +30,7 @@
 		2F453FC4263A6864002FF42C /* TaskModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModal.swift; sourceTree = "<group>"; };
 		2F453FC7263A6968002FF42C /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		2F453FCF263A92D3002FF42C /* DifficultyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyButton.swift; sourceTree = "<group>"; };
+		2F658A49263E3E0B0017D48E /* LevelUpAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpAlert.swift; sourceTree = "<group>"; };
 		2FB612F0263BCCF50096827E /* Archive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Archive.swift; sourceTree = "<group>"; };
 		2FB612F4263BD3C20096827E /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		2FB612F6263BD3D30096827E /* LevelTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelTask.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				2F453FCF263A92D3002FF42C /* DifficultyButton.swift */,
+				2F658A49263E3E0B0017D48E /* LevelUpAlert.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 				2FD900BE263B091000EC14B2 /* Badges.swift in Sources */,
 				2FB612F9263BEE490096827E /* LevelViewModel.swift in Sources */,
 				2FE0CF43263A414C0098447E /* ContentView.swift in Sources */,
+				2F658A4A263E3E0B0017D48E /* LevelUpAlert.swift in Sources */,
 				2FE0CF41263A414C0098447E /* KaizenAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
