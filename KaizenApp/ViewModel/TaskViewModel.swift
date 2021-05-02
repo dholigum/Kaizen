@@ -1,5 +1,5 @@
 //
-//  HomeViewModel.swift
+//  TaskViewModel.swift
 //  KaizenApp
 //
 //  Created by Syahrul Apple Developer BINUS on 29/04/21.
@@ -8,22 +8,12 @@
 import SwiftUI
 import CoreData
 
-class HomeViewModel: ObservableObject {
+class TaskViewModel: ObservableObject {
     @Published var title = ""
     @Published var date = Date()
     @Published var difficulty = ""
     
-    // For NewData sheet
-    @Published var isNewData = false
-    
-    // Storing Update Item ...
-    @Published var updateItem: Task!
-    
-    func selectDifficulty(value: String) {
-        difficulty = value
-    }
-    
-    func getExperiencePoint(difficulty: String) -> Int {
+    var xp: Int {
         switch difficulty {
         case "Easy":
             return 50
@@ -36,6 +26,18 @@ class HomeViewModel: ObservableObject {
         default:
             return 0
         }
+    }
+    
+    // For Presenting Modal sheet
+    @Published var isNewData = false
+    @Published var isPresentedBadgesView = false
+    @Published var isPresentedArchiveView = false
+    
+    // Storing Update Item ...
+    @Published var updateItem: Task!
+    
+    func selectDifficulty(value: String) {
+        difficulty = value
     }
     
     func getStickyColor(difficulty: String) -> String {
@@ -60,6 +62,7 @@ class HomeViewModel: ObservableObject {
             updateItem.date = date
             updateItem.title = title
             updateItem.difficulty = difficulty
+            updateItem.xp = Int32(xp)
             
             try! context.save()
             
@@ -77,6 +80,7 @@ class HomeViewModel: ObservableObject {
         newTask.date = date
         newTask.title = title
         newTask.difficulty = difficulty
+        newTask.xp = Int32(xp)
         
         // Saving data ...
         do {

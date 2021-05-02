@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DifficultyButton: View {
-    @ObservedObject var homeData: HomeViewModel
+    @ObservedObject var homeData: TaskViewModel
     
     var emoji: String
     var title: String

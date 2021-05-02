@@ -1,5 +1,5 @@
 //
-//  ModalView.swift
+//  TaskModal.swift
 //  KaizenApp
 //
 //  Created by Syahrul Apple Developer BINUS on 29/04/21.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct ModalView: View {
-    @ObservedObject var homeData = HomeViewModel()
-    @Environment(\.managedObjectContext) var context
+struct TaskModal: View {
+    @ObservedObject var homeData = TaskViewModel()
+    @Environment(\.managedObjectContext) var contextTask
     
     var body: some View {
-        ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
+        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
             Color("accentcolor").edgesIgnoringSafeArea(.all)
             
             VStack(alignment: .leading) {
@@ -81,7 +81,7 @@ struct ModalView: View {
                 Spacer()
                 
                 // Add or Update task button
-                Button(action: {homeData.writeData(context: context)}, label: {
+                Button(action: {homeData.writeData(context: contextTask)}, label: {
                     Text(homeData.updateItem == nil ? "Add Now" : "Update")
                         .font(.title2)
                         .foregroundColor(.white)
@@ -98,6 +98,14 @@ struct ModalView: View {
             }
             .padding()
             
+            Button(action: {homeData.isNewData.toggle()}, label: {
+                Image(systemName: "xmark")
+                    .foregroundColor(.black)
+                    .font(Font.system(size: 24, weight: .regular))
+                    .padding(.trailing)
+                    .padding(.top)
+                    .padding(.top, 8)
+            })
         }
     }
 }
