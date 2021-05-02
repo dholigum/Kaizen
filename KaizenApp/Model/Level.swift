@@ -21,13 +21,4 @@ struct Level {
         self.quotes = quotes
         self.author = author
     }
-    
-    // Computed value
-    var isComplete: Bool {
-        if self.xpToComplete == self.xpNow {
-            return true
-        } else {
-            return false
-        }
-    }
 }

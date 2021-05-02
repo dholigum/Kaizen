@@ -22,6 +22,10 @@ struct LevelTask {
         Level(11, xpToComplete: 9999999, xpNow: 0, quotes: "Live as if you were to die tomorrow, Learn as if you were to live forever", author: "Mahatma Gandhi")
     ]
     
+    func getLevelList() -> [Level] {
+        return levelingProgress
+    }
+    
     func getCurrentLevelXPToComplete(_ level: Int) -> Int {
         
         // Normalize level with the index array
@@ -44,7 +48,7 @@ struct LevelTask {
         } else if (level - 1) > 10 {
             levelIndex = 10
         } else {
-            levelIndex = level - 1
+            levelIndex = level
         }
         
         let qoute = levelingProgress[levelIndex].quotes

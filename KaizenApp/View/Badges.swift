@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct Badges: View {
+    
     @ObservedObject var homeData = TaskViewModel()
+    
+    var levelTask = LevelTask()
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
@@ -23,8 +26,6 @@ struct Badges: View {
                     .padding(.top, 8)
                 ScrollView(.horizontal, showsIndicators: false, content: {
                     LazyHStack(spacing: 10) {
-                        Text("HHEHE")
-                        Text("HHEHE")
                     }
                 })
             }
