@@ -22,18 +22,44 @@ struct LevelUpAlert: View {
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
-            VStack {
-                Image(systemName: "gamecontroller")
-                    .foregroundColor(.white)
-                    .font(Font.system(size: 24, weight: .regular))
-                    .padding(.trailing)
-                    .padding(.top)
-                    .padding(.top, 8)
-                Text("Congratulations")
+            VStack(alignment: .center) {
+                ZStack {
+                    Image("congrats-ribbon")
+                        .resizable()
+                        .frame(width: 70, height: 60, alignment: .center)
+                        .padding(.top, -16)
+                    Text("\(currentLevel + 1)")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("yellowcolor"))
+                        .padding(.bottom, 28)
+                }
+                Text("Congratulations!")
                     .font(.title)
+                    .fontWeight(.bold)
                     .foregroundColor(.white)
+                    .padding(.top, -16)
                 Text("You've Successfully Done The Work")
+                    .font(.subheadline)
+                    .fontWeight(.light)
                     .foregroundColor(.white)
+                Text("-")
+                    .font(.subheadline)
+                    .fontWeight(.light)
+                    .foregroundColor(.white)
+                Text("\"\(levelTask.getCurrentLevelQuotesCompletion(currentLevel).quote)\"")
+                    .font(.subheadline)
+                    .fontWeight(.light)
+                    .italic()
+                    .foregroundColor(.white)
+                    .frame(width: 320, height: 60, alignment: .center)
+                    .multilineTextAlignment(.center)
+                Text("- \(levelTask.getCurrentLevelQuotesCompletion(currentLevel).author)")
+                    .font(.footnote)
+                    .fontWeight(.light)
+                    .italic()
+                    .foregroundColor(.white)
+                    .padding(.bottom)
                 
                 Button(action: {}) {
                     Text("View in Badges")
@@ -44,13 +70,14 @@ struct LevelUpAlert: View {
                         .background(Color.white)
                         .clipShape(Capsule())
                 }
+                .padding(.bottom, -16)
             }
-            .padding(.vertical, 25)
-            .padding(.horizontal, 30)
+            .padding(.vertical, 40)
+            .padding(.horizontal, 10)
             .background(
                 LinearGradient(gradient: .init(colors: [Color("maincolor"), Color("maincolor2")]), startPoint: .top, endPoint: .bottom)
             )
-            .cornerRadius(25)
+            .cornerRadius(16)
             
             Button(action: {
                 self.currentLevel += 1
@@ -64,7 +91,9 @@ struct LevelUpAlert: View {
                 levelProgress.writeProgress(
                     detail: Level(nextLevel,
                                   xpToComplete: levelTask.getCurrentLevelXPToComplete(nextLevel),
-                                  xpNow: residualXP),
+                                  xpNow: residualXP,
+                                  quotes: levelTask.getCurrentLevelQuotesCompletion(currentLevel).quote,
+                                  author: levelTask.getCurrentLevelQuotesCompletion(currentLevel).author),
                     context: contextLevel)
             }) {
                 Image(systemName: "xmark")

@@ -76,6 +76,7 @@ struct Home: View {
                                 .trim(from: 0, to: nextLevelXPToComplete == 0 ? levelPercentage : CGFloat(nextLevelStartingXP) / CGFloat(nextLevelXPToComplete))
                                 .stroke(style: StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round))
                                 .foregroundColor(Color.black)
+                                .rotationEffect(Angle(degrees: 270))
                                 .frame(width: 80, height: 80)
                                 .padding(.leading, 28)
                                 .padding(.top, UIApplication.shared.windows.first!.safeAreaInsets.top + CGFloat(8))
@@ -115,7 +116,7 @@ struct Home: View {
                                     .fontWeight(.light)
                                     .foregroundColor(.white)
                                     .padding(.trailing, -8)
-                                Text("Finish more tasks to gain more \(sumXP) experience points")
+                                Text("\(sumXP != 0 ? "Finish more tasks to gain more \(sumXP) experience points" : "Create new task to gain additional experience points")")
                                     .font(.footnote)
                                     .fontWeight(.light)
                                     .foregroundColor(.white)
@@ -208,6 +209,7 @@ struct Home: View {
                                         contextTask.delete(task)
                                         
                                         var xpToCompleteCurrentLevel = levelTask.getLevelDetail(currentLevel).xpToComplete
+                                        let currentQuotesCompletion = levelTask.getCurrentLevelQuotesCompletion(currentLevel)
                                     
                                         if currentXP >= xpToCompleteCurrentLevel {
                                             self.currentLevel += 1
@@ -219,7 +221,9 @@ struct Home: View {
                                         levelProgress.writeProgress(
                                             detail: Level(currentLevel + 1,
                                                           xpToComplete: xpToCompleteCurrentLevel,
-                                                          xpNow: Int(task.xp)),
+                                                          xpNow: Int(task.xp),
+                                                          quotes: currentQuotesCompletion.quote,
+                                                          author: currentQuotesCompletion.author),
                                             context: contextLevel)
                                         
                                         try! contextTask.save()
@@ -261,11 +265,12 @@ struct Home: View {
             if  (nextLevelXPToComplete == 0 ? levelPercentage : CGFloat(nextLevelStartingXP) / CGFloat(nextLevelXPToComplete)) >= 1 {
                 
                 LevelUpAlert(nextLevelXPToComplete: $nextLevelXPToComplete, nextLevelStartingXP: $nextLevelStartingXP, residualXP: residualXP)
+                    .frame(width: UIScreen.main.bounds.size.width - 60, height: UIScreen.main.bounds.size.width - 120, alignment: .center)
                     .alignmentGuide(.trailing, computeValue: { dimension in
                         dimension[HorizontalAlignment.trailing] + 28
                     })
                     .alignmentGuide(.bottom, computeValue: { _ in
-                        UIScreen.main.bounds.size.height / 2
+                        (UIScreen.main.bounds.size.height / 2) + 40
                     })
                     
             }
