@@ -10,6 +10,8 @@ import SwiftUI
 struct LevelUpAlert: View {
     
     @StateObject var levelProgress = LevelViewModel()
+    @StateObject var homeData = TaskViewModel()
+    
     @Environment(\.managedObjectContext) var contextLevel
     @State var currentLevel = UserDefaults.standard.integer(forKey: "level")
     
@@ -61,16 +63,6 @@ struct LevelUpAlert: View {
                     .foregroundColor(.white)
                     .padding(.bottom)
                 
-                Button(action: {}) {
-                    Text("View in Badges")
-                        .foregroundColor(.black)
-                        .fontWeight(.bold)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 25)
-                        .background(Color.white)
-                        .clipShape(Capsule())
-                }
-                .padding(.bottom, -16)
             }
             .padding(.vertical, 40)
             .padding(.horizontal, 10)
@@ -79,23 +71,7 @@ struct LevelUpAlert: View {
             )
             .cornerRadius(16)
             
-            Button(action: {
-                self.currentLevel += 1
-                UserDefaults.standard.set(self.currentLevel, forKey: "level")
-                
-                let nextLevel = currentLevel + 1
-                
-                nextLevelXPToComplete = levelTask.getCurrentLevelXPToComplete(nextLevel)
-                nextLevelStartingXP = residualXP
-                
-                levelProgress.writeProgress(
-                    detail: Level(nextLevel,
-                                  xpToComplete: levelTask.getCurrentLevelXPToComplete(nextLevel),
-                                  xpNow: residualXP,
-                                  quotes: levelTask.getCurrentLevelQuotesCompletion(currentLevel).quote,
-                                  author: levelTask.getCurrentLevelQuotesCompletion(currentLevel).author),
-                    context: contextLevel)
-            }) {
+            Button(action: { actionButton() }) {
                 Image(systemName: "xmark")
                     .font(.system(size: 24))
                     .foregroundColor(.white)
@@ -103,5 +79,23 @@ struct LevelUpAlert: View {
             .padding()
         }
         .shadow(radius: 4)
+    }
+    
+    func actionButton() {
+        self.currentLevel += 1
+        UserDefaults.standard.set(self.currentLevel, forKey: "level")
+        
+        let nextLevel = currentLevel + 1
+        
+        nextLevelXPToComplete = levelTask.getCurrentLevelXPToComplete(nextLevel)
+        nextLevelStartingXP = residualXP
+        
+        levelProgress.writeProgress(
+            detail: Level(nextLevel,
+                          xpToComplete: levelTask.getCurrentLevelXPToComplete(nextLevel),
+                          xpNow: residualXP,
+                          quotes: levelTask.getCurrentLevelQuotesCompletion(currentLevel).quote,
+                          author: levelTask.getCurrentLevelQuotesCompletion(currentLevel).author),
+            context: contextLevel)
     }
 }

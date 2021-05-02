@@ -272,7 +272,6 @@ struct Home: View {
                     .alignmentGuide(.bottom, computeValue: { _ in
                         (UIScreen.main.bounds.size.height / 2) + 40
                     })
-                    
             }
             
         })

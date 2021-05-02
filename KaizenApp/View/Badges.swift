@@ -21,7 +21,12 @@ struct Badges: View {
                     .foregroundColor(.black)
                     .padding()
                     .padding(.top, 8)
-                
+                ScrollView(.horizontal, showsIndicators: false, content: {
+                    LazyHStack(spacing: 10) {
+                        Text("HHEHE")
+                        Text("HHEHE")
+                    }
+                })
             }
             .padding()
             
