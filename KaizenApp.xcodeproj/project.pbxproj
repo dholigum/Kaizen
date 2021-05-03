@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F1983A0263FF83700CB88C5 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F19839F263FF83700CB88C5 /* LevelData.swift */; };
 		2F453FC5263A6864002FF42C /* TaskModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F453FC4263A6864002FF42C /* TaskModal.swift */; };
 		2F453FC8263A6968002FF42C /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F453FC7263A6968002FF42C /* TaskViewModel.swift */; };
 		2F453FD0263A92D3002FF42C /* DifficultyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F453FCF263A92D3002FF42C /* DifficultyButton.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F19839F263FF83700CB88C5 /* LevelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = SOURCE_ROOT; };
 		2F453FC4263A6864002FF42C /* TaskModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModal.swift; sourceTree = "<group>"; };
 		2F453FC7263A6968002FF42C /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		2F453FCF263A92D3002FF42C /* DifficultyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyButton.swift; sourceTree = "<group>"; };
@@ -59,6 +61,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F19839D263FF7FD00CB88C5 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				2F19839F263FF83700CB88C5 /* LevelData.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		2F19839E263FF80C00CB88C5 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				2FE0CF40263A414C0098447E /* KaizenAppApp.swift */,
+				2FE0CF42263A414C0098447E /* ContentView.swift */,
+				2FE0CF49263A414D0098447E /* Persistence.swift */,
+				2FE0CF58263A53730098447E /* Launch Screen.storyboard */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		2FB612F2263BD0900096827E /* Component */ = {
 			isa = PBXGroup;
 			children = (
@@ -96,17 +117,15 @@
 		2FE0CF3F263A414C0098447E /* KaizenApp */ = {
 			isa = PBXGroup;
 			children = (
+				2F19839E263FF80C00CB88C5 /* App */,
+				2F19839D263FF7FD00CB88C5 /* Data */,
 				2FE0CF5D263A55C40098447E /* ViewModel */,
 				2FE0CF5C263A55B80098447E /* View */,
 				2FB612F3263BD3A30096827E /* Model */,
-				2FE0CF40263A414C0098447E /* KaizenAppApp.swift */,
-				2FE0CF42263A414C0098447E /* ContentView.swift */,
 				2FE0CF44263A414D0098447E /* Assets.xcassets */,
-				2FE0CF49263A414D0098447E /* Persistence.swift */,
 				2FE0CF4E263A414D0098447E /* Info.plist */,
 				2FE0CF4B263A414D0098447E /* KaizenApp.xcdatamodeld */,
 				2FE0CF46263A414D0098447E /* Preview Content */,
-				2FE0CF58263A53730098447E /* Launch Screen.storyboard */,
 			);
 			path = KaizenApp;
 			sourceTree = "<group>";
@@ -222,6 +241,7 @@
 				2FD900BE263B091000EC14B2 /* Badges.swift in Sources */,
 				2FB612F9263BEE490096827E /* LevelViewModel.swift in Sources */,
 				2FE0CF43263A414C0098447E /* ContentView.swift in Sources */,
+				2F1983A0263FF83700CB88C5 /* LevelData.swift in Sources */,
 				2F658A4A263E3E0B0017D48E /* LevelUpAlert.swift in Sources */,
 				2FE0CF41263A414C0098447E /* KaizenAppApp.swift in Sources */,
 			);

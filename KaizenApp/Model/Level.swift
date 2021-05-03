@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Level {
+struct Level: Identifiable {
+    var id = UUID()
     let level: Int
     let xpToComplete: Int
     var xpNow: Int

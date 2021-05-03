@@ -10,8 +10,9 @@ import SwiftUI
 struct Badges: View {
     
     @ObservedObject var homeData = TaskViewModel()
+    @State var currentLevel = UserDefaults.standard.integer(forKey: "level")
     
-    var levelTask = LevelTask()
+    var levels: [Level] = levelData
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
@@ -23,11 +24,40 @@ struct Badges: View {
                     .fontWeight(.bold)
                     .foregroundColor(.black)
                     .padding()
+                    .padding(.leading, -16)
                     .padding(.top, 8)
-                ScrollView(.horizontal, showsIndicators: false, content: {
-                    LazyHStack(spacing: 10) {
+                
+                ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
+                    Color(.white)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Level Accomplishment \(currentLevel)")
+                            .font(.system(size: 18))
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
+                        
+                        ScrollView(.horizontal, showsIndicators: false, content: {
+                            LazyHStack(spacing: 16) {
+                                ForEach(levels) { item in
+                                    VStack {
+                                        Text("\(item.level)")
+                                            .foregroundColor(.black)
+                                    }
+                                    .frame(width: 100, height: 100, alignment: .center)
+                                    .background(
+                                        item.level <= 3 ? LinearGradient(gradient: .init(colors: [Color("maincolor"), Color("maincolor2")]), startPoint: .top, endPoint: .bottom)
+                                        : LinearGradient(gradient: .init(colors: [Color("accentcolor")]), startPoint: .top, endPoint: .bottom)
+                                    )
+                                    .cornerRadius(12)
+                                }
+                            }
+                        })
+                        .padding(.trailing, 16)
                     }
-                })
+                    .padding()
+                }
+                .frame(width: UIScreen.main.bounds.width - 40, height: 160)
+                .cornerRadius(8)
             }
             .padding()
             

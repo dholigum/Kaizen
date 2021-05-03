@@ -258,7 +258,6 @@ struct Home: View {
                     )
                     .clipShape(Circle())
             })
-            .padding()
             .padding(.trailing)
             
             // Show Level Up Alert
