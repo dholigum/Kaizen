@@ -11,8 +11,13 @@ struct Badges: View {
     
     @ObservedObject var homeData = TaskViewModel()
     @State var currentLevel = UserDefaults.standard.integer(forKey: "level")
-    @State var showBadgesDetail = false
+    @State var showLevelBadgesDetail = false
     @State var levelSelected: Int = 1
+    
+    @FetchRequest(entity: Progress.entity(), sortDescriptors: [NSSortDescriptor(key: "level", ascending: true)], predicate: NSPredicate(format: "xpNow == %@", "50")) var easyTasks : FetchedResults<Progress>
+    @FetchRequest(entity: Progress.entity(), sortDescriptors: [NSSortDescriptor(key: "level", ascending: true)], predicate: NSPredicate(format: "xpNow == %@", "100")) var normalTasks : FetchedResults<Progress>
+    @FetchRequest(entity: Progress.entity(), sortDescriptors: [NSSortDescriptor(key: "level", ascending: true)], predicate: NSPredicate(format: "xpNow == %@", "150")) var hardTasks : FetchedResults<Progress>
+    @FetchRequest(entity: Progress.entity(), sortDescriptors: [NSSortDescriptor(key: "level", ascending: true)], predicate: NSPredicate(format: "xpNow == %@", "200")) var insaneTasks : FetchedResults<Progress>
     
     var levels: [Level] = levelData
     
@@ -45,7 +50,7 @@ struct Badges: View {
                                     Button(action: {
                                         if item.level <= currentLevel {
                                             withAnimation {
-                                                showBadgesDetail.toggle()
+                                                showLevelBadgesDetail.toggle()
                                                 levelSelected = item.level
                                             }
                                         } else {
@@ -69,21 +74,20 @@ struct Badges: View {
                                                     .font(.system(size: 8))
                                                     .foregroundColor(.white)
                                             }
-                                            .frame(width: 80, height: 80, alignment: .center)
+                                            .frame(width: 85, height: 85, alignment: .center)
                                             .background(
                                                 LinearGradient(gradient: .init(colors: [Color("maincolor"), Color("maincolor2")]), startPoint: .top, endPoint: .bottom)
                                             )
                                             .cornerRadius(12)
                                         } else {
                                             VStack {
-                                                
                                                 Text("Complete Level \(item.level) to unlock this badges")
                                                     .font(.system(size: 10))
                                                     .multilineTextAlignment(.center)
                                                     .foregroundColor(.gray)
                                                     .padding(.all, 4)
                                             }
-                                            .frame(width: 80, height: 80, alignment: .center)
+                                            .frame(width: 85, height: 85, alignment: .center)
                                             .background(
                                                 LinearGradient(gradient: .init(colors: [Color("accentcolor")]), startPoint: .top, endPoint: .bottom)
                                             )
@@ -96,6 +100,7 @@ struct Badges: View {
                         })
                     }
                     .padding()
+                    .padding(.horizontal)
                 }
                 .frame(width: UIScreen.main.bounds.width - 40, height: 160)
                 .padding(.trailing, 2)
@@ -106,38 +111,24 @@ struct Badges: View {
                     Color(.white)
                     
                     VStack(alignment: .leading) {
-                        Text("Challenge Accomplishment \(currentLevel)")
+                        Text("Challenge Accomplishment")
                             .font(.system(size: 18))
                             .fontWeight(.bold)
                             .foregroundColor(.black)
+                            .padding(.bottom, 12)
                         
-                        ScrollView(.horizontal, showsIndicators: false, content: {
-                            LazyHStack(spacing: 16) {
-                                ForEach(levels) { item in
-                                    
-                                    Button(action: {
-                                        withAnimation {
-                                            showBadgesDetail.toggle()
-                                        }
-                                    }, label: {
-                                        VStack {
-                                            Text("\(item.level)")
-                                        }
-                                        .frame(width: 80, height: 80, alignment: .center)
-                                        .background(
-                                            item.level <= 3 ? LinearGradient(gradient: .init(colors: [Color("maincolor"), Color("maincolor2")]), startPoint: .top, endPoint: .bottom)
-                                                : LinearGradient(gradient: .init(colors: [Color("accentcolor")]), startPoint: .top, endPoint: .bottom)
-                                        )
-                                        .cornerRadius(12)
-                                    })
-                                    
-                                }
-                            }
-                        })
+                        ChallengeBadgesRow(showBadgesDetail: $showLevelBadgesDetail, difficulty: "Easy", count: easyTasks.count)
+                        
+                        ChallengeBadgesRow(showBadgesDetail: $showLevelBadgesDetail, difficulty: "Normal", count: normalTasks.count)
+                        
+                        ChallengeBadgesRow(showBadgesDetail: $showLevelBadgesDetail, difficulty: "Hard", count: hardTasks.count)
+                        
+                        ChallengeBadgesRow(showBadgesDetail: $showLevelBadgesDetail, difficulty: "Insane", count: insaneTasks.count)
                     }
                     .padding()
+                    .padding(.horizontal)
                 }
-                .frame(width: UIScreen.main.bounds.width - 40, height: 160)
+                .frame(width: UIScreen.main.bounds.width - 40, height: 480)
                 .cornerRadius(8)
                 
             }
@@ -153,8 +144,8 @@ struct Badges: View {
                     .padding(.top, 8)
             })
             
-            if showBadgesDetail {
-                BadgesDetailView(show: $showBadgesDetail, levelSelected: levelSelected)
+            if showLevelBadgesDetail {
+                LevelBadgesDetailView(show: $showLevelBadgesDetail, levelSelected: levelSelected)
                     .frame(width: UIScreen.main.bounds.size.width - 60, height: UIScreen.main.bounds.size.width - 120, alignment: .center)
                     .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.25), radius: 12, x: 6, y: 6)
                     .alignmentGuide(.trailing, computeValue: { dimension in

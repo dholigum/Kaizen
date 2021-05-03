@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		2F1983A0263FF83700CB88C5 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F19839F263FF83700CB88C5 /* LevelData.swift */; };
-		2F1983A226402C6800CB88C5 /* BadgesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1983A126402C6800CB88C5 /* BadgesDetailView.swift */; };
-		2F1983A4264033FD00CB88C5 /* ChallengeBadges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1983A3264033FD00CB88C5 /* ChallengeBadges.swift */; };
+		2F1983A226402C6800CB88C5 /* LevelBadgesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1983A126402C6800CB88C5 /* LevelBadgesDetailView.swift */; };
+		2F1983A4264033FD00CB88C5 /* ChallengeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1983A3264033FD00CB88C5 /* ChallengeData.swift */; };
+		2F1983A62640560D00CB88C5 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1983A52640560D00CB88C5 /* Challenge.swift */; };
+		2F1983A826405B6400CB88C5 /* ChallengeBadgesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1983A726405B6400CB88C5 /* ChallengeBadgesRow.swift */; };
 		2F453FC5263A6864002FF42C /* TaskModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F453FC4263A6864002FF42C /* TaskModal.swift */; };
 		2F453FC8263A6968002FF42C /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F453FC7263A6968002FF42C /* TaskViewModel.swift */; };
 		2F453FD0263A92D3002FF42C /* DifficultyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F453FCF263A92D3002FF42C /* DifficultyButton.swift */; };
@@ -31,8 +33,10 @@
 
 /* Begin PBXFileReference section */
 		2F19839F263FF83700CB88C5 /* LevelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = SOURCE_ROOT; };
-		2F1983A126402C6800CB88C5 /* BadgesDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgesDetailView.swift; sourceTree = "<group>"; };
-		2F1983A3264033FD00CB88C5 /* ChallengeBadges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeBadges.swift; sourceTree = "<group>"; };
+		2F1983A126402C6800CB88C5 /* LevelBadgesDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelBadgesDetailView.swift; sourceTree = "<group>"; };
+		2F1983A3264033FD00CB88C5 /* ChallengeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeData.swift; sourceTree = "<group>"; };
+		2F1983A52640560D00CB88C5 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
+		2F1983A726405B6400CB88C5 /* ChallengeBadgesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeBadgesRow.swift; sourceTree = "<group>"; };
 		2F453FC4263A6864002FF42C /* TaskModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModal.swift; sourceTree = "<group>"; };
 		2F453FC7263A6968002FF42C /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		2F453FCF263A92D3002FF42C /* DifficultyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyButton.swift; sourceTree = "<group>"; };
@@ -69,7 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				2F19839F263FF83700CB88C5 /* LevelData.swift */,
-				2F1983A3264033FD00CB88C5 /* ChallengeBadges.swift */,
+				2F1983A3264033FD00CB88C5 /* ChallengeData.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -90,7 +94,8 @@
 			children = (
 				2F453FCF263A92D3002FF42C /* DifficultyButton.swift */,
 				2F658A49263E3E0B0017D48E /* LevelUpAlert.swift */,
-				2F1983A126402C6800CB88C5 /* BadgesDetailView.swift */,
+				2F1983A126402C6800CB88C5 /* LevelBadgesDetailView.swift */,
+				2F1983A726405B6400CB88C5 /* ChallengeBadgesRow.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -100,6 +105,7 @@
 			children = (
 				2FB612F4263BD3C20096827E /* Level.swift */,
 				2FB612F6263BD3D30096827E /* LevelTask.swift */,
+				2F1983A52640560D00CB88C5 /* Challenge.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -236,17 +242,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F453FD0263A92D3002FF42C /* DifficultyButton.swift in Sources */,
+				2F1983A62640560D00CB88C5 /* Challenge.swift in Sources */,
 				2FB612F5263BD3C20096827E /* Level.swift in Sources */,
 				2F453FC5263A6864002FF42C /* TaskModal.swift in Sources */,
 				2FE0CF4A263A414D0098447E /* Persistence.swift in Sources */,
 				2F453FC8263A6968002FF42C /* TaskViewModel.swift in Sources */,
-				2F1983A226402C6800CB88C5 /* BadgesDetailView.swift in Sources */,
+				2F1983A226402C6800CB88C5 /* LevelBadgesDetailView.swift in Sources */,
 				2FB612F7263BD3D30096827E /* LevelTask.swift in Sources */,
 				2FB612F1263BCCF50096827E /* Archive.swift in Sources */,
+				2F1983A826405B6400CB88C5 /* ChallengeBadgesRow.swift in Sources */,
 				2FE0CF4D263A414D0098447E /* KaizenApp.xcdatamodeld in Sources */,
 				2FE0CF5F263A55DC0098447E /* Home.swift in Sources */,
 				2FD900BE263B091000EC14B2 /* Badges.swift in Sources */,
-				2F1983A4264033FD00CB88C5 /* ChallengeBadges.swift in Sources */,
+				2F1983A4264033FD00CB88C5 /* ChallengeData.swift in Sources */,
 				2FB612F9263BEE490096827E /* LevelViewModel.swift in Sources */,
 				2FE0CF43263A414C0098447E /* ContentView.swift in Sources */,
 				2F1983A0263FF83700CB88C5 /* LevelData.swift in Sources */,

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BadgesDetailView: View {
+struct LevelBadgesDetailView: View {
     
     @Binding var show: Bool
     var levelSelected: Int
