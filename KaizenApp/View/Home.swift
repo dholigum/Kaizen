@@ -93,16 +93,16 @@ struct Home: View {
                                     Image(systemName: "star.circle")
                                         .foregroundColor(.white)
                                         .font(Font.system(size: 30, weight: .regular))
-                                        .padding(.vertical, 8)
+                                        .padding(.all, 8)
                                         .padding(.top, 2)
                                 })
-                                Button(action: {homeData.isPresentedArchiveView.toggle()}, label: {
-                                    Image(systemName: "archivebox.circle")
-                                        .foregroundColor(.white)
-                                        .font(Font.system(size: 30, weight: .regular))
-                                        .padding(.trailing, 8)
-                                        .padding(.top, 2)
-                                })
+//                                Button(action: {homeData.isPresentedArchiveView.toggle()}, label: {
+//                                    Image(systemName: "archivebox.circle")
+//                                        .foregroundColor(.white)
+//                                        .font(Font.system(size: 30, weight: .regular))
+//                                        .padding(.trailing, 8)
+//                                        .padding(.top, 2)
+//                                })
                             }
                             Text("\(nextLevelXPToComplete == 0 ? currentXP : nextLevelStartingXP) / \(currentXPToComplete == 1 ? levelTask.getLevelDetail(currentLevel).xpToComplete : currentXPToComplete) XP")
                                 .font(.subheadline)
@@ -258,7 +258,6 @@ struct Home: View {
                     )
                     .clipShape(Circle())
             })
-            .padding()
             .padding(.trailing)
             
             // Show Level Up Alert

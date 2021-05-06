@@ -98,7 +98,14 @@ struct TaskModal: View {
             }
             .padding()
             
-            Button(action: {homeData.isNewData.toggle()}, label: {
+            Button(action: {
+                homeData.isNewData.toggle()
+                
+                // Reset to default add new task
+                homeData.title = ""
+                homeData.difficulty = ""
+                homeData.updateItem = nil
+            }, label: {
                 Image(systemName: "xmark")
                     .foregroundColor(.black)
                     .font(Font.system(size: 24, weight: .regular))

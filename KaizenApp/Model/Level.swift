@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Level {
+struct Level: Identifiable {
+    var id = UUID()
     let level: Int
     let xpToComplete: Int
     var xpNow: Int
@@ -20,14 +21,5 @@ struct Level {
         self.xpNow = xpNow
         self.quotes = quotes
         self.author = author
-    }
-    
-    // Computed value
-    var isComplete: Bool {
-        if self.xpToComplete == self.xpNow {
-            return true
-        } else {
-            return false
-        }
     }
 }
